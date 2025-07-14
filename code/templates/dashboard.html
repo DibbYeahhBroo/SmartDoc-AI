@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+
+</head>
+<body class="dashboard-bg">
+<h1 class="welcome-heading">Welcome, {{ username }}</h1>
+
+<div class="dashboard-actions">
+  <a href="#" class="action-button">PlotSpan</a>
+  <a href="{{ url_for('pdf_chat') }}" class="action-button">PDF Chat</a>
+  <a href="{{ url_for('my_account') }}" class="action-button">My Account</a>
+  <a href="{{ url_for('logout') }}" class="action-button">Logout</a>
+</div>
+
+
+    <script>
+    window.onload = function() {
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    alert({{ message|tojson }});
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    };
+
+    
+  // Grab every interactive button you care about
+  const triggerButtons = document.querySelectorAll('.submit-btn, .button');
+
+  // When any of them is clicked, blur the background
+  triggerButtons.forEach(btn =>
+    btn.addEventListener('click', () =>
+      document.body.classList.add('blur-bg')
+    )
+  );
+
+  /* Optional: remove the blur when the user clicks outside the form */
+  document.addEventListener('click', e => {
+    const clickedInsideCard = e.target.closest('.form-container');
+    if (!clickedInsideCard) document.body.classList.remove('blur-bg');
+  });
+  
+    </script>
+</body>
+</html>
